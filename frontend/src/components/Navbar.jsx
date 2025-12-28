@@ -83,6 +83,7 @@ const Navbar = () => {
     <nav className="navbar">
       <div className="container navbar-container">
         <Link to="/" className="logo" onClick={closeMenu}>
+          <img src={logo} alt="ShopWave" style={{ height: '60px' }} />
         </Link>
 
         <div className="search-box" ref={searchRef}>
