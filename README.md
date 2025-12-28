@@ -162,8 +162,6 @@ Use these credentials to test the various roles and functionalities.
     ```bash
     cd backend
     npm install
-    # Seed Data (Optional - Resets DB)
-    node seeder.js
     npm start
     ```
 
