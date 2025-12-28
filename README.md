@@ -84,7 +84,7 @@ The project is a **Monorepo** containing four distinct applications:
 *   **Product Management**: Full CRUD for Products, Categories, and Attributes.
 *   **Marketing**: Manage Coupons and Promotions.
 
-### 📦 Warehouse Ops (PWA)
+### 📦 Warehouse Ops (Manage warehouse)
 *   **Mobile-First Design**: Optimized for handheld devices (scanners/phones) for on-the-floor usage.
 *   **Order Notifications**: Real-time alerts for staff when new orders are assigned.
 *   **Stock Control**:
@@ -102,10 +102,10 @@ Use the following links to access the running applications:
 
 | Application | URL | Description |
 | :--- | :--- | :--- |
-| **Frontend** | [http://localhost:5173](http://localhost:5173) | Customer Storefront |
-| **Admin Panel** | [http://localhost:5174](http://localhost:5174) | Management Dashboard |
-| **Warehouse Ops** | [http://localhost:5175](http://localhost:5175) | Logistics PWA |
-| **Backend API** | [http://localhost:5000](http://localhost:5000) | REST API Server |
+| **Frontend** | [https://ecommerce-app-five-kappa.vercel.app](https://ecommerce-app-five-kappa.vercel.app/) | Customer Storefront |
+| **Admin Panel** | [https://ecommerce-app-y97t.vercel.app/](https://ecommerce-app-y97t.vercel.app/) | Management Dashboard |
+| **Warehouse Ops** | [https://ecommerce-app-jv5f.vercel.app/](https://ecommerce-app-jv5f.vercel.app/) | Warehouse management app |
+
 
 ---
 
