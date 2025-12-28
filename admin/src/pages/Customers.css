@@ -1,0 +1,90 @@
+/* Tab Buttons */
+.form-tabs {
+    display: flex;
+    gap: 1rem;
+    padding-bottom: 1rem;
+    border-bottom: 2px solid var(--border-color);
+    margin-bottom: 2rem;
+}
+
+.tab-btn {
+    padding: 0.75rem 1.5rem;
+    background: none;
+    border: none;
+    font-size: 1rem;
+    font-weight: 500;
+    color: var(--text-color);
+    cursor: pointer;
+    position: relative;
+    transition: all 0.3s ease;
+    border-radius: 8px;
+    opacity: 0.7;
+}
+
+.tab-btn:hover {
+    background-color: var(--background-color);
+    opacity: 1;
+}
+
+.tab-btn.active {
+    color: var(--primary-color);
+    background-color: rgba(79, 70, 229, 0.1);
+    /* Light indigo background */
+    font-weight: 600;
+    opacity: 1;
+}
+
+/* Section Action Buttons */
+.btn-action-group {
+    display: flex;
+    gap: 1rem;
+}
+
+.btn-add-user {
+    background-color: var(--primary-color);
+    color: white;
+    padding: 0.75rem 1.5rem;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 6px -1px rgba(79, 70, 229, 0.2);
+}
+
+.btn-add-user:hover {
+    background-color: #4338ca;
+    /* Indigo 700 */
+    transform: translateY(-2px);
+    box-shadow: 0 6px 8px -1px rgba(79, 70, 229, 0.3);
+}
+
+.btn-seed {
+    background-color: transparent;
+    border: 1px solid var(--border-color);
+    color: var(--text-color);
+    padding: 0.75rem 1.5rem;
+    border-radius: 8px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.btn-seed:hover {
+    background-color: var(--background-color);
+    border-color: #9ca3af;
+}
+
+/* Modal Styles */
+.modal-overlay {
+    backdrop-filter: blur(4px);
+    background: rgba(0, 0, 0, 0.6) !important;
+}
+
+.modal-content {
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04) !important;
+    border: 1px solid var(--border-color);
+}

@@ -1,0 +1,227 @@
+:root {
+  --bg-color: #121212;
+  --surface-color: #1e1e1e;
+  --surface-hover: #2d2d2d;
+  --primary-color: #bb86fc;
+  /* Purple accent */
+  --secondary-color: #03dac6;
+  /* Teal accent */
+  --error-color: #cf6679;
+  --text-high-emphasis: #ffffff;
+  --text-medium-emphasis: rgba(255, 255, 255, 0.74);
+  --text-disabled: rgba(255, 255, 255, 0.38);
+  --font-family: 'Inter', system-ui, -apple-system, sans-serif;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background-color: var(--bg-color);
+  color: var(--text-high-emphasis);
+  font-family: var(--font-family);
+  -webkit-font-smoothing: antialiased;
+  width: 100vw;
+  height: 100vh;
+  overflow-x: hidden;
+}
+
+#root {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Typography */
+h1,
+h2,
+h3,
+h4 {
+  margin: 0;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+}
+
+h1 {
+  font-size: 2rem;
+}
+
+h2 {
+  font-size: 1.5rem;
+}
+
+h3 {
+  font-size: 1.25rem;
+}
+
+p {
+  color: var(--text-medium-emphasis);
+  line-height: 1.5;
+}
+
+/* Utilities */
+.container {
+  padding: 1rem;
+  max-width: 600px;
+  /* Mobile focused */
+  margin: 0 auto;
+  width: 100%;
+  box-sizing: border-box;
+  padding-bottom: 100px;
+  /* Space for Bottom Nav */
+}
+
+.card {
+  background-color: var(--surface-color);
+  border-radius: 16px;
+  padding: 1.5rem;
+  margin-bottom: 1rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 12px;
+  padding: 1rem 1.5rem;
+  font-size: 1rem;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+  transition: transform 0.1s ease, filter 0.2s;
+  width: 100%;
+  box-sizing: border-box;
+  gap: 0.5rem;
+}
+
+.btn:active {
+  transform: scale(0.98);
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, var(--primary-color), #9a67ea);
+  color: #000;
+}
+
+.btn-secondary {
+  background-color: var(--surface-hover);
+  color: var(--text-high-emphasis);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.btn-accent {
+  background: linear-gradient(135deg, var(--secondary-color), #018786);
+  color: #000;
+}
+
+.input-field {
+  width: 100%;
+  background-color: var(--bg-color);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  padding: 1rem;
+  color: white;
+  font-size: 1rem;
+  margin-bottom: 1rem;
+  box-sizing: border-box;
+}
+
+.input-field:focus {
+  outline: 2px solid var(--primary-color);
+  border-color: transparent;
+}
+
+/* Scanner View */
+.scanner-viewport {
+  width: 100%;
+  height: 300px;
+  background: #000;
+  border-radius: 16px;
+  overflow: hidden;
+  position: relative;
+  margin-bottom: 1rem;
+}
+
+.scanner-viewport video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.scan-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border: 2px solid var(--secondary-color);
+  box-shadow: 0 0 0 100vh rgba(0, 0, 0, 0.5);
+}
+
+/* Navbar (Top) */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  background-color: var(--surface-color);
+  position: sticky;
+  top: 0;
+  z-index: 90;
+  /* Lower than BottomNav if needed, but sticky top */
+}
+
+/* Bottom Navigation */
+.bottom-nav {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 70px;
+  background: rgba(30, 30, 30, 0.95);
+  /* High opacity for legibility */
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  z-index: 1000;
+  padding-bottom: env(safe-area-inset-bottom);
+  box-sizing: border-box;
+}
+
+.bottom-nav .nav-item {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  text-decoration: none;
+  color: var(--text-disabled);
+  transition: all 0.3s ease;
+  cursor: pointer;
+  background: transparent;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.bottom-nav .nav-item .icon-container {
+  padding: 8px 16px;
+  border-radius: 20px;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.bottom-nav .nav-item.active {
+  color: var(--primary-color);
+}
+
+.bottom-nav .nav-item.active .icon-container {
+  background-color: rgba(187, 134, 252, 0.15);
+  transform: translateY(-2px);
+}

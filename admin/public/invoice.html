@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Invoice</title>
+    <style>
+        body {
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            color: #333;
+            background: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .invoice-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 40px;
+            background: white;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .invoice-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 40px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid #eee;
+        }
+
+        .company-details h1 {
+            color: #2c3e50;
+            margin: 0 0 10px;
+            font-size: 36px;
+            letter-spacing: 1px;
+        }
+
+        .company-details h2 {
+            font-size: 18px;
+            color: #7f8c8d;
+            margin: 0 0 15px;
+        }
+
+        .company-details p {
+            margin: 5px 0;
+            font-size: 14px;
+            color: #555;
+        }
+
+        .invoice-meta {
+            text-align: right;
+        }
+
+        .meta-row {
+            margin-bottom: 10px;
+        }
+
+        .meta-row .label {
+            font-weight: bold;
+            margin-right: 10px;
+            color: #7f8c8d;
+        }
+
+        .meta-row .value {
+            font-weight: 600;
+        }
+
+        .bill-to {
+            margin-bottom: 30px;
+        }
+
+        .bill-to h3 {
+            color: #7f8c8d;
+            font-size: 14px;
+            text-transform: uppercase;
+            margin-bottom: 10px;
+        }
+
+        .bill-to p {
+            margin: 5px 0;
+            font-size: 15px;
+        }
+
+        .invoice-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 30px;
+        }
+
+        .invoice-table th {
+            background: #f8f9fa;
+            padding: 12px;
+            text-align: left;
+            font-weight: 600;
+            color: #2c3e50;
+            border-bottom: 2px solid #eee;
+        }
+
+        .invoice-table td {
+            padding: 12px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .invoice-table td:last-child,
+        .invoice-table th:last-child {
+            text-align: right;
+        }
+
+        .item-desc .item-name {
+            font-weight: 500;
+        }
+
+        .item-desc .item-variant {
+            color: #7f8c8d;
+            font-size: 0.9em;
+        }
+
+        .invoice-summary {
+            width: 300px;
+            margin-left: auto;
+        }
+
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .summary-row.grand-total {
+            border-top: 2px solid #2c3e50;
+            border-bottom: none;
+            margin-top: 10px;
+            padding-top: 15px;
+            font-weight: bold;
+            font-size: 18px;
+            color: #2c3e50;
+        }
+
+        .invoice-footer {
+            margin-top: 50px;
+            text-align: center;
+            color: #7f8c8d;
+            font-size: 14px;
+        }
+
+        .print-btn {
+            margin-top: 20px;
+            padding: 10px 20px;
+            background: #3498db;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background 0.3s;
+        }
+
+        .print-btn:hover {
+            background: #2980b9;
+        }
+
+        .loading,
+        .error {
+            text-align: center;
+            padding: 50px;
+            font-size: 18px;
+            color: #666;
+        }
+
+        .error {
+            color: #e74c3c;
+        }
+
+        @media print {
+            body {
+                background: white;
+                margin: 0;
+                padding: 0;
+            }
+
+            .invoice-container {
+                box-shadow: none;
+                padding: 0;
+                margin: 0;
+                width: 100%;
+                max-width: none;
+            }
+
+            .print-btn {
+                display: none;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div id="loading" class="loading">Loading Invoice...</div>
+    <div id="error" class="error" style="display: none;"></div>
+
+    <div id="invoice" class="invoice-container" style="display: none;">
+        <div class="invoice-header">
+            <div class="company-details">
+                <h1>INVOICE</h1>
+                <h2>My E-Commerce Store</h2>
+                <p>123 Commerce St, Business City, 12345</p>
+                <p>Email: support@myecommercestore.com</p>
+                <p>Phone: (555) 123-4567</p>
+            </div>
+            <div class="invoice-meta">
+                <div class="meta-row">
+                    <span class="label">Invoice #:</span>
+                    <span class="value" id="order-id"></span>
+                </div>
+                <div class="meta-row">
+                    <span class="label">Date:</span>
+                    <span class="value" id="order-date"></span>
+                </div>
+                <div class="meta-row">
+                    <span class="label">Status:</span>
+                    <span class="value" id="order-status"></span>
+                </div>
+            </div>
+        </div>
+
+        <div class="invoice-body">
+            <div class="bill-to">
+                <h3>Bill To:</h3>
+                <p><strong id="customer-name"></strong></p>
+                <p id="customer-address"></p>
+                <p id="customer-city-zip"></p>
+                <p id="customer-country"></p>
+                <p id="customer-email"></p>
+            </div>
+
+            <table class="invoice-table">
+                <thead>
+                    <tr>
+                        <th>Item</th>
+                        <th>Quantity</th>
+                        <th>Unit Price</th>
+                        <th>Total</th>
+                    </tr>
+                </thead>
+                <tbody id="order-items">
+                    <!-- Items will be populated here -->
+                </tbody>
+            </table>
+
+            <div class="invoice-summary">
+                <div class="summary-row">
+                    <span>Subtotal:</span>
+                    <span id="subtotal"></span>
+                </div>
+                <div class="summary-row">
+                    <span>Tax:</span>
+                    <span id="tax"></span>
+                </div>
+                <div class="summary-row">
+                    <span>Shipping:</span>
+                    <span id="shipping"></span>
+                </div>
+                <div class="summary-row grand-total">
+                    <span>Total:</span>
+                    <span id="total"></span>
+                </div>
+            </div>
+        </div>
+
+        <div class="invoice-footer">
+            <p>Thank you for your business!</p>
+            <button class="print-btn" onclick="window.print()">Print Invoice</button>
+        </div>
+    </div>
+
+    <script>
+        async function fetchOrder() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const id = urlParams.get('id');
+            const userInfo = JSON.parse(localStorage.getItem('userInfo'));
+
+            if (!id) {
+                showError('No order ID provided');
+                return;
+            }
+
+            if (!userInfo || !userInfo.token) {
+                showError('Please login to view this invoice');
+                // Optional: Redirect to login
+                // window.location.href = '/login';
+                return;
+            }
+
+            try {
+                const response = await fetch(`http://localhost:5000/api/orders/${id}`, {
+                    headers: {
+                        'Authorization': `Bearer ${userInfo.token}`
+                    }
+                });
+
+                if (!response.ok) {
+                    throw new Error('Failed to fetch order');
+                }
+
+                const order = await response.json();
+                renderInvoice(order);
+            } catch (error) {
+                console.error('Error:', error);
+                showError('Error loading invoice details');
+            }
+        }
+
+        function renderInvoice(order) {
+            document.getElementById('loading').style.display = 'none';
+            document.getElementById('invoice').style.display = 'block';
+
+            // Meta
+            document.getElementById('order-id').textContent = order._id;
+            document.getElementById('order-date').textContent = new Date(order.createdAt).toLocaleDateString();
+            document.getElementById('order-status').textContent = order.isPaid ? 'PAID' : 'UNPAID';
+
+            // Customer
+            document.getElementById('customer-name').textContent = order.user?.name || 'Guest';
+            document.getElementById('customer-address').textContent = order.shippingAddress.address;
+            document.getElementById('customer-city-zip').textContent = `${order.shippingAddress.city}, ${order.shippingAddress.postalCode}`;
+            document.getElementById('customer-country').textContent = order.shippingAddress.country;
+            document.getElementById('customer-email').textContent = order.user?.email || order.paymentResult?.email_address;
+
+            // Items
+            const itemsContainer = document.getElementById('order-items');
+            itemsContainer.innerHTML = order.orderItems.map(item => {
+                let variantText = '';
+                if (item.variant) {
+                    if (typeof item.variant === 'object') {
+                        variantText = Object.entries(item.variant).map(([key, value]) => `${key}: ${value}`).join(', ');
+                    } else {
+                        variantText = item.variant;
+                    }
+                    variantText = ` <span class="item-variant">(${variantText})</span>`;
+                }
+
+                return `
+                    <tr>
+                        <td>
+                            <div class="item-desc">
+                                <span class="item-name">${item.name}</span>
+                                ${variantText}
+                            </div>
+                        </td>
+                        <td>${item.qty}</td>
+                        <td>₹${item.price.toFixed(2)}</td>
+                        <td>₹${(item.price * item.qty).toFixed(2)}</td>
+                    </tr>
+                `;
+            }).join('');
+
+            // Totals
+            document.getElementById('subtotal').textContent = `₹${order.itemsPrice.toFixed(2)}`;
+            document.getElementById('tax').textContent = `₹${order.taxPrice.toFixed(2)}`;
+            document.getElementById('shipping').textContent = `₹${order.shippingPrice.toFixed(2)}`;
+            document.getElementById('total').textContent = `₹${order.totalPrice.toFixed(2)}`;
+        }
+
+        function showError(message) {
+            document.getElementById('loading').style.display = 'none';
+            const errorDiv = document.getElementById('error');
+            errorDiv.style.display = 'block';
+            errorDiv.textContent = message;
+        }
+
+        // Initialize
+        fetchOrder();
+    </script>
+</body>
+
+</html>
