@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-export const SOCKET_URL = 'http://localhost:5000';
+export const SOCKET_URL = 'https://ecommerce-app-3c27.onrender.com';
 
 const api = axios.create({
     baseURL: `${SOCKET_URL}/api`,
